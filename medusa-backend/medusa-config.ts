@@ -39,10 +39,12 @@ module.exports = defineConfig({
             resolve: "./src/modules/authentik",
             id: "authentik",
             options: {
-              authentikDomain: process.env.AUTHENTIK_DOMAIN!,
               clientId: process.env.AUTHENTIK_CLIENT_ID!,
               clientSecret: process.env.AUTHENTIK_CLIENT_SECRET!,
               redirectUri: process.env.AUTHENTIK_REDIRECT_URI!,
+              tokenUri: process.env.AUTHENTIK_TOKEN_URI!,
+              authorizeUri: process.env.AUTHENTIK_AUTHORIZE_URI!,
+              userinfoUri: process.env.AUTHENTIK_USERINFO_URI!,
             },
           },
         ],
