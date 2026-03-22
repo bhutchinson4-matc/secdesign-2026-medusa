@@ -12,10 +12,12 @@ type InjectedDependencies = {
 }
 
 type Options = {
-  authentikDomain: string
   clientId: string
   clientSecret: string
   redirectUri: string
+  tokenUri: string
+  authorizeUri: string
+  userinfoUri: string
 }
 
 class AuthentikAuthProviderService extends AbstractAuthModuleProvider {
@@ -40,13 +42,6 @@ class AuthentikAuthProviderService extends AbstractAuthModuleProvider {
   }
 
   static validateOptions(options: Record<any, any>): void | never {
-    if (!options.authentikDomain) {
-      throw new MedusaError(
-        MedusaError.Types.INVALID_DATA,
-        "Authentik auth provider requires authentikDomain option"
-      )
-    }
-
     if (!options.clientId) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
@@ -62,6 +57,27 @@ class AuthentikAuthProviderService extends AbstractAuthModuleProvider {
     }
 
     if (!options.redirectUri) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Authentik auth provider requires redirectUri option"
+      )
+    }
+
+    if (!options.tokenUri) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Authentik auth provider requires redirectUri option"
+      )
+    }
+
+    if (!options.authorizeUri) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Authentik auth provider requires redirectUri option"
+      )
+    }
+
+    if (!options.userinfoUri) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
         "Authentik auth provider requires redirectUri option"
@@ -101,7 +117,7 @@ class AuthentikAuthProviderService extends AbstractAuthModuleProvider {
       state: state,
     })
 
-    const authUrl = `${this.options_.authentikDomain}/application/o/authorize/?${
+    const authUrl = `${this.options_.authorizeUri}?${
       params.toString()
     }`
 
@@ -141,7 +157,7 @@ class AuthentikAuthProviderService extends AbstractAuthModuleProvider {
 
     try {
       // Exchange the authorization code for tokens
-      const tokenUrl = `${this.options_.authentikDomain}/application/o/token/`
+      const tokenUrl = this.options_.tokenUri
       const params = new URLSearchParams({
         grant_type: "authorization_code",
         code: code,
@@ -174,7 +190,7 @@ class AuthentikAuthProviderService extends AbstractAuthModuleProvider {
       const expiresIn = tokenData.expires_in as number
 
       // Get user info from Authentik using the access token
-      const userInfoUrl = `${this.options_.authentikDomain}/application/o/userinfo/`
+      const userInfoUrl = this.options_.userinfoUri
       const userInfoResponse = await fetch(userInfoUrl, {
         method: "GET",
         headers: {
