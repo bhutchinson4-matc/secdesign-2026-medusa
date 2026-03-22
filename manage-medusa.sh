@@ -10,7 +10,7 @@
 
 # Paths to frontend and backend directories
 FRONTEND_DIR="./medusa-frontend"
-BACKEND_DIR="./medusa-backend"
+BACKEND_DIR="./medusa-backend/.medusa/server"
 
 # Names for PM2 processes
 FRONTEND_NAME="medusa-frontend"

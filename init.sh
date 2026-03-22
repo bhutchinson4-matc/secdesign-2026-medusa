@@ -3,7 +3,7 @@
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
 # .env file must exist
-if [ ! -f "$SCRIPT_DIR/$ENV_FILE" ]; then
+if [ ! -f "$SCRIPT_DIR/.env" ]; then
   echo "Error: .env file does not exist. Use .env.template as a reference"
   exit 1
 fi
@@ -23,4 +23,4 @@ npm install -g pm2
 npm install -g yarn
 
 # start up docker compose services
-sudo docker compose up -d
+sudo docker compose -f "$SCRIPT_DIR/docker-compose.yml" up -d
