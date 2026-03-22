@@ -1,23 +1,21 @@
 services:
   medusa-data:
     image: postgres:16
-    container_name: medusa-data
     restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_VALUE}   # stored in .env file
       POSTGRES_USER: medusa
       POSTGRES_DB: medusa_data
     ports:
-      - 5432:5432
+      - 127.0.0.1:5432:5432 # don't publically expose port
     volumes:
       - medusa-postgres-data:/var/lib/postgresql/data
 
   medusa-redis:
     image: redis:8
-    container_name: medusa-redis
     restart: unless-stopped
     ports:
-      - 6379:6379
+      - 127.0.0.1:6379:6379 # don't publically expose port
     volumes:
       - medusa-redis-data:/data
 
