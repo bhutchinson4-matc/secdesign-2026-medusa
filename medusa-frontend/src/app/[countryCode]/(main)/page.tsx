@@ -40,7 +40,7 @@ export default async function Home(props: {
             <img
               src="/images/lost_and_found3.png"
               alt="Lost and Found Bin"
-              className="w-full max-w-md md:max-w-lg object-contain hover:scale-105 transition-transform duration-500"
+              className="w-full max-w-md md:max-w-lg object-contain"
             />
           </div>
 

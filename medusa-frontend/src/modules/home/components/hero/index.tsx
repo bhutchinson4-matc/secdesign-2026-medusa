@@ -31,7 +31,7 @@ const Hero = () => {
             <img
               src="/images/matc_logo.png"
               alt="MATC Logo"
-              className="h-full w-auto object-contain transform transition-transform duration-500 hover:scale-105"
+              className="h-full w-auto object-contain"
             />
           </div>
 
