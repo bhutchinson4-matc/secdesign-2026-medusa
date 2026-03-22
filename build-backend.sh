@@ -10,4 +10,6 @@ npm run predeploy
 npm run build
 npx tsc
 
-cp $SCRIPT_DIR/.env $SCRIPT_DIR/medusa-backend/.medusa/server
+cd ../
+
+cp "$SCRIPT_DIR/.env" "$SCRIPT_DIR/medusa-backend/.medusa/server/.env"
