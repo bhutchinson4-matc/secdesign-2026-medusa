@@ -10,7 +10,7 @@
 
 # Paths to frontend and backend directories
 FRONTEND_DIR="./medusa-frontend"
-BACKEND_DIR="./medusa-backend/.medusa/server"
+BACKEND_DIR="./medusa-backend"
 
 # Names for PM2 processes
 FRONTEND_NAME="medusa-frontend"
@@ -31,18 +31,21 @@ SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 run_pm2() {
   local name=$1
   local dir=$2
+  local manager=$3   # "npm" or "yarn"
+  local cmd=$4       # "start" script name
 
   cd "$SCRIPT_DIR/$dir"
-  echo "$SCRIPT_DIR/$dir"
 
   case $ACTION in
     start)
       echo "Starting $name..."
-      pm2 start npm --name "$name" -- run start
+      pm2 start $manager --name "$name" -- run $cmd
       ;;
     stop)
       echo "Stopping $name..."
       pm2 stop "$name"
+      echo "Deleting old PM2 instance for $name..."
+      pm2 delete "$name"
       ;;
     restart)
       echo "Restarting $name..."
@@ -61,14 +64,14 @@ run_pm2() {
 # Handle target
 case $TARGET in
   frontend)
-    run_pm2 "$FRONTEND_NAME" "$FRONTEND_DIR"
+    run_pm2 "$FRONTEND_NAME" "$FRONTEND_DIR" "yarn" "start"
     ;;
   backend)
-    run_pm2 "$BACKEND_NAME" "$BACKEND_DIR"
+    run_pm2 "$BACKEND_NAME" "$BACKEND_DIR" "npm" "start"
     ;;
   all)
-    run_pm2 "$FRONTEND_NAME" "$FRONTEND_DIR"
-    run_pm2 "$BACKEND_NAME" "$BACKEND_DIR"
+    run_pm2 "$FRONTEND_NAME" "$FRONTEND_DIR" "yarn" "start"
+    run_pm2 "$BACKEND_NAME" "$BACKEND_DIR" "npm" "start"
     ;;
   *)
     echo "Unknown target: $TARGET"
