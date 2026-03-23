@@ -2,6 +2,8 @@ import { Metadata } from "next"
 
 import LoginTemplate from "@modules/account/templates/login-template"
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Sign in",
   description: "Sign in to your MATC Store account.",

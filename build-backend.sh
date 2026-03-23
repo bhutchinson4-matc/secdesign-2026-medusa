@@ -12,4 +12,4 @@ npx tsc
 
 cd ../
 
-cp "$SCRIPT_DIR/.env" "$SCRIPT_DIR/medusa-backend/.medusa/server/.env"
+cp "$SCRIPT_DIR/.env.backend" "$SCRIPT_DIR/medusa-backend/.medusa/server/.env"

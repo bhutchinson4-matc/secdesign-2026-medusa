@@ -1,2 +1,6 @@
 .env
-.env.production
+.env.backend
+.env.frontend
+
+/nginx/nginx.conf
+/nginx/certs/
