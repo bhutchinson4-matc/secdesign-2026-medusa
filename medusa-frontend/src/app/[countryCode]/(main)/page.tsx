@@ -5,6 +5,8 @@ import Hero from "@modules/home/components/hero"
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "MATC Store",
   description:
